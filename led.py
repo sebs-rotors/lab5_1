@@ -52,12 +52,12 @@ def transmit_letter(letter):
             dot()
         elif symbol == '-':
             dash()
-    time.sleep(UNIT * 2)  # Add extra 2 units (total 3 with the 1 unit from dot/dash)
 
 def transmit_message(message):
     for char in message:
         if char.upper() in MORSE_CODE:
             transmit_letter(char)
+            time.sleep(UNIT * 2)
 
 def main():
     if len(sys.argv) != 3:
