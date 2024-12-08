@@ -37,13 +37,13 @@ def dot():
 
 def dash():
     activate_led()
-    time.sleep(UNIT * 1.2)
+    time.sleep(UNIT * 1.92)
     deactivate_led()
     time.sleep(UNIT)  # Space between parts of same letter
 
 def transmit_letter(letter):
     if letter == ' ':
-        time.sleep(UNIT * 0.8)  # Space between words
+        time.sleep(UNIT * 1.28)  # Space between words
         return
         
     morse = MORSE_CODE[letter.upper()]
@@ -57,7 +57,7 @@ def transmit_message(message):
     for char in message:
         if char.upper() in MORSE_CODE:
             transmit_letter(char)
-            time.sleep(UNIT * 0.8)
+            time.sleep(UNIT * 1.28)
 
 def main():
     if len(sys.argv) != 3:
@@ -71,7 +71,7 @@ def main():
         setup()
         for _ in range(repeat_count):
             transmit_message(message)
-            time.sleep(UNIT * 7.2)  # Pause between message repetitions
+            time.sleep(UNIT * 11.52)  # Pause between message repetitions
             
     except KeyboardInterrupt:
         GPIO.cleanup()
