@@ -1,5 +1,8 @@
+#!python3
+
 import RPi.GPIO as GPIO
 import time
+import sys
 
 LED_PIN = 17
 UNIT = 0.25  # One unit = 0.25 seconds
@@ -58,14 +61,25 @@ def transmit_message(message):
             transmit_letter(char)
 
 def main():
+    if len(sys.argv) != 3:
+        print("Usage: ./led <repeat_count> <message>")
+        sys.exit(1)
+        
     try:
+        repeat_count = int(sys.argv[1])
+        message = sys.argv[2]
+        
         setup()
-        while True:
-            message = input("Enter message to transmit (or Ctrl+C to exit): ")
+        for _ in range(repeat_count):
             transmit_message(message)
+            time.sleep(UNIT * 3)  # Pause between message repetitions
+            
     except KeyboardInterrupt:
         GPIO.cleanup()
         print("\nProgram terminated by user")
+    except ValueError:
+        print("Error: First argument must be a number")
+        GPIO.cleanup()
     except Exception as e:
         print(f"An error occurred: {e}")
         GPIO.cleanup()
