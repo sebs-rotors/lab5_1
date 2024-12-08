@@ -5,7 +5,7 @@ import time
 import sys
 
 LED_PIN = 17
-UNIT = 0.050  # One unit = 0.050 seconds
+UNIT = 0.055  # One unit = 0.050 seconds
 
 # Morse code dictionary
 MORSE_CODE = {
@@ -43,7 +43,7 @@ def dash():
 
 def transmit_letter(letter):
     if letter == ' ':
-        time.sleep(UNIT * 2.5)  # Space between words
+        time.sleep(UNIT * 2)  # Space between words
         return
         
     morse = MORSE_CODE[letter.upper()]
