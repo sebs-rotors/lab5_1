@@ -71,7 +71,7 @@ def main():
         setup()
         for _ in range(repeat_count):
             transmit_message(message)
-            time.sleep((float)UNIT * 11.52)  # Pause between message repetitions
+            time.sleep(UNIT * 11.52)  # Pause between message repetitions
             
     except KeyboardInterrupt:
         GPIO.cleanup()
