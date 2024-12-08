@@ -5,7 +5,7 @@ import time
 import sys
 
 LED_PIN = 17
-UNIT = 0.185  # One unit = 0.25 seconds
+UNIT = 0.100  # One unit = 0.100 seconds
 
 # Morse code dictionary
 MORSE_CODE = {
@@ -53,7 +53,6 @@ def transmit_letter(letter):
         elif symbol == '-':
             dash()
     
-    time.sleep(UNIT * 2)  # Additional 2 units for letter spacing (1 unit already added after dot/dash)
 
 def transmit_message(message):
     for char in message:
@@ -72,7 +71,7 @@ def main():
         setup()
         for _ in range(repeat_count):
             transmit_message(message)
-            time.sleep(UNIT * 3)  # Pause between message repetitions
+            time.sleep(UNIT * 18)  # Pause between message repetitions
             
     except KeyboardInterrupt:
         GPIO.cleanup()
