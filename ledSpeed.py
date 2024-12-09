@@ -37,7 +37,7 @@ def dot():
 
 def dash():
     activate_led()
-    time.sleep(UNIT * 1.92)
+    time.sleep(UNIT * 1.98)
     deactivate_led()
     time.sleep(UNIT)  # Space between parts of same letter
 
