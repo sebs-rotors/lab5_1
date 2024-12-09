@@ -5,7 +5,7 @@ import time
 import sys
 
 LED_PIN = 17
-UNIT = 0.018  # One unit = 0.008 seconds
+UNIT = 0.012  # One unit = 0.008 seconds
 
 # Morse code dictionary - using tuples for slightly better performance
 MORSE_CODE = {
