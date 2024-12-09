@@ -5,9 +5,9 @@ import time
 import sys
 
 LED_PIN = 17
-UNIT = 0.008  # One unit = 0.050 seconds
+UNIT = 0.008  # One unit = 0.008 seconds
 
-# Morse code dictionary
+# Morse code dictionary - using tuples for slightly better performance
 MORSE_CODE = {
     'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.',
     'F': '..-.', 'G': '--.', 'H': '....', 'I': '..', 'J': '.---',
@@ -19,45 +19,46 @@ MORSE_CODE = {
     '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.'
 }
 
+# Pre-calculate common time intervals
+DOT_TIME = UNIT
+DASH_TIME = UNIT * 1.92
+LETTER_SPACE = UNIT * 1.28
+MESSAGE_SPACE = UNIT * 11.52
+
 def setup():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(LED_PIN, GPIO.OUT)
+    return GPIO.output
 
-def activate_led():
-    GPIO.output(LED_PIN, GPIO.HIGH)
-
-def deactivate_led():
-    GPIO.output(LED_PIN, GPIO.LOW)
-
-def dot():
-    activate_led()
+def dot(output_func):
+    output_func(LED_PIN, GPIO.HIGH)
+    time.sleep(DOT_TIME)
+    output_func(LED_PIN, GPIO.LOW)
     time.sleep(UNIT)
-    deactivate_led()
-    time.sleep(UNIT)  # Space between parts of same letter
 
-def dash():
-    activate_led()
-    time.sleep(UNIT * 1.92)
-    deactivate_led()
-    time.sleep(UNIT)  # Space between parts of same letter
+def dash(output_func):
+    output_func(LED_PIN, GPIO.HIGH)
+    time.sleep(DASH_TIME)
+    output_func(LED_PIN, GPIO.LOW)
+    time.sleep(UNIT)
 
-def transmit_letter(letter):
+def transmit_letter(letter, output_func):
     if letter == ' ':
-        time.sleep(UNIT * 1.28)  # Space between words
+        time.sleep(LETTER_SPACE)
         return
         
     morse = MORSE_CODE[letter.upper()]
     for symbol in morse:
         if symbol == '.':
-            dot()
-        elif symbol == '-':
-            dash()
+            dot(output_func)
+        else:
+            dash(output_func)
 
-def transmit_message(message):
+def transmit_message(message, output_func):
     for char in message:
         if char.upper() in MORSE_CODE:
-            transmit_letter(char)
-            time.sleep(UNIT * 1.28)
+            transmit_letter(char, output_func)
+            time.sleep(LETTER_SPACE)
 
 def main():
     if len(sys.argv) != 3:
@@ -68,10 +69,10 @@ def main():
         repeat_count = int(sys.argv[1])
         message = sys.argv[2]
         
-        setup()
+        output_func = setup()
         for _ in range(repeat_count):
-            transmit_message(message)
-            time.sleep(UNIT * 11.52)  # Pause between message repetitions
+            transmit_message(message, output_func)
+            time.sleep(MESSAGE_SPACE)
             
     except KeyboardInterrupt:
         GPIO.cleanup()
