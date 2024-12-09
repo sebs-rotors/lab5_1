@@ -43,7 +43,7 @@ def dash():
 
 def transmit_letter(letter):
     if letter == ' ':
-        time.sleep(UNIT * 1.28)  # Space between words
+        time.sleep(UNIT * 1.34)  # Space between words
         return
         
     morse = MORSE_CODE[letter.upper()]
