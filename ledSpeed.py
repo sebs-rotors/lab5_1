@@ -21,9 +21,9 @@ MORSE_CODE = {
 
 # Pre-calculate common time intervals
 DOT_TIME = UNIT
-DASH_TIME = UNIT * 2.88
-LETTER_SPACE = UNIT * 1.92
-MESSAGE_SPACE = UNIT * 17.28
+DASH_TIME = UNIT * 3.6
+LETTER_SPACE = UNIT * 2.4
+MESSAGE_SPACE = UNIT * 21.6
 
 def setup():
     GPIO.setmode(GPIO.BCM)
